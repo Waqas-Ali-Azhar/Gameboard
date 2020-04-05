@@ -1,0 +1,13 @@
+body{
+  padding-top:50px;
+}
+table{
+  margin: 0 auto;
+}
+table tr td{
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  
+  /*margin-top:50px;*/
+}
