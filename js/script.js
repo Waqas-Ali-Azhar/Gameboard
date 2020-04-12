@@ -1,18 +1,63 @@
 var debug = true;
+var gameBoard = null;
 $(document).ready(function(){
-
+ gameBoard = new GameBoard(5);
 
 
 });
 
+
+
+
 function GameBoard(n){
   this.size = n;
-  this.board = [[],[]];
+  //this.board = [[x],[y]];
   this.player = [{new Player({name:"player1", currentCell:"7"})}];
-
+  this.displayBoard(this);
 }
 
-GameBoard.prototype.addPlayer(objPlayer){
+
+function Helper(){
+}
+
+Helper.prototype.generatePosition = function(size){
+  var position = Math.floor((Math.random() * (size*size)));
+}
+
+
+
+GameBoard.prototype.assignPlayer = function(playerObj){
+  this.board[x][y] = playerObj.name;
+  
+}
+
+GameBoard.prototype.checkPosition = function(){
+
+};
+
+GameBoard.prototype.displayBoard = function(boardObj){
+  var size = boardObj.size;
+  var html = '<div class="table">';
+  for(var i=0; i<size; ++i){
+    html += '<div class="row '+(i+1)+' ">';
+    for(var j=0; j<size; ++j){
+      html += '<div class="cell '+((i*size)+j+1)+'">';
+      html += '</div>';
+    }
+    html +="</div>";
+  }
+
+  //end table
+  html +="</div>"
+  $("div.container").html(html);
+
+};
+
+function displayBoard(){
+  // create html for table & link it with a div
+}
+
+GameBoard.prototype.addPlayer = function(objPlayer){
   this.player = this.player.push(objPlayer);
   this.board[objPlayer.positionX][objPlayer.positionY] = 1;
 }
@@ -22,24 +67,39 @@ function Player(playerObj){
   this.positionX = playerObj.x;
   this.positionY = playerObj.y;
   this.health = playerObj.health;
+  this.showPlayer();
+  gameBoard.assignPlayer(this);
+}
+
+Player.prototype.showPlayer = function(x,y){
+  var poisiton = x+y;
+  $('table tr td')
 }
 
 Player.prototype.moveForward = function(x,y){
   this.positionX = ++this.positionX;
   this.positionY = ++this.positionX;
-  
-  return {this.positionX+""+this.positionY};
+  if(debug){
+    console.log(this.positionX+""+this.positionY);
+  }
+  return { x:this.positionX, y:this.positionY};
 }
 
 Player.prototype.moveBackward = function(){
   this.positionX = --this.positionX;
   this.positionY = --this.positionX;
-  return this.positionX+""+this.positionY;
+  if(debug){
+    console.log(this.positionX+""+this.positionY);
+  }
+  return { x:this.positionX, y:this.positionY};
 }
 
 Player.prototype.moveUp = function(){
   this.positionY = --this.positionY;
-  return this.positionX+""+this.positionY;
+  if(debug){
+    console.log(this.positionX+""+this.positionY);
+  }
+  return { x:this.positionX, y:this.positionY };
 }
 
 Player.prototype.moveDown = function(){
